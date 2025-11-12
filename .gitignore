@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+venv/
+env/
+backend/venv/
+node_modules/
+dist/
+build/
+.env
+.env.*
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Optional: ignore Python virtual envs created at project root or by IDEs
+# If you keep model artifacts (.pkl) in the repo, don't ignore them here.
