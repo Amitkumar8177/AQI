@@ -324,7 +324,7 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-gray-600">
             <p className="mb-2 font-medium">
-              Built with ❤️ using React, Flask, and Machine Learning
+              Built By Amit Kumar 
             </p>
             <p className="text-sm text-gray-500">
               Data sources: IQAir AirVisual API (Primary) & OpenWeatherMap API (Fallback) | Model: Random Forest Regressor
