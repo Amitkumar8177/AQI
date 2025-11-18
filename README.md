@@ -246,6 +246,58 @@ Files of interest
 
 ---
 
+## Frontend components (detailed)
+
+### CitySearch (`frontend/src/components/CitySearch.jsx`)
+
+Purpose
+- A lightweight search box used in the dashboard to look up cities by name and select one to fetch real-time AQI.
+
+Key behaviour
+- Performs incremental search once the user types 2+ characters.
+- Calls the backend endpoint: `GET /api/search_city?city=<query>` and expects a JSON array of city objects.
+- When a city is selected the component calls the provided `onCitySelect(city)` callback with the selected city object.
+
+Props
+- `onCitySelect: (city) => void` — required. Called when user selects a city. The `city` object has at least: `name`, `country`, `lat`, `lon`, and optionally `state`.
+
+Expected API contract
+- Request: `GET /api/search_city?city=Delhi`
+- Response (example):
+
+```json
+[
+    {"name": "Delhi", "state": "Delhi", "country": "India", "lat": 28.7041, "lon": 77.1025},
+    {"name": "Delhi Cantonment", "state": "Delhi", "country": "India", "lat": 28.5562, "lon": 77.0986}
+]
+```
+
+Integration / usage example
+
+```jsx
+import CitySearch from './components/CitySearch';
+
+function Dashboard() {
+    const handleCitySelect = (city) => {
+        // city.lat / city.lon or city.name can be used to request realtime AQI
+        fetchRealtimeAQI(city.lat, city.lon);
+    };
+
+    return <CitySearch onCitySelect={handleCitySelect} />;
+}
+```
+
+Styling & accessibility notes
+- The component uses simple button-based list items and Tailwind utility classes (`input-field`, `w-full`, etc.).
+- It currently lacks keyboard navigation and ARIA attributes; consider adding `role="listbox"` / `role="option"` and keyboard support for better accessibility.
+
+Suggested improvements
+- Debounce requests (e.g., 200–400ms) to reduce backend load.
+- Add loading/error UI states and retry/backoff for network errors.
+- Support arrow-key navigation and Enter to select to improve UX.
+- Cache recent queries or popular city list for instant suggestions.
+
+
 Development notes
 -----------------
 - Do not commit secrets. Use `.env` for local keys and `.env.example` as a template.
