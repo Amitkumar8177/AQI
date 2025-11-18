@@ -504,7 +504,18 @@ def get_cities():
         'success': True,
         'cities': cities
     })
+@app.route('/api/search_city', methods=['GET'])
+def search_city():
+    city = request.args.get('city')
+    api_key = app.config['OPENWEATHER_API_KEY']
+    if not city or not api_key:
+        return jsonify([])
 
+    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={api_key}'
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        return jsonify([])
+    return jsonify(resp.json())
 # ============================================
 # RUN APP
 # ============================================

@@ -56,6 +56,11 @@ export const apiService = {
     const response = await api.get('/cities');
     return response.data;
   },
+  // Get city suggestions
+  getCitySuggestions: async (city) => {
+  const response = await api.get('/search_city', { params: { city } });
+  return response.data;
+  },
 };
 
 export default api;
